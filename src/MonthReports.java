@@ -8,14 +8,16 @@ import java.util.HashMap;
 public class MonthReports
     {
     private HashMap <Integer, ArrayList<MonthReader>> months = new HashMap<>();
-    private ArrayList<MonthReader> monthReaders = new ArrayList<>();
+
     public MonthReports ()
     {
         months = new HashMap<>();
-        monthReaders = new ArrayList<>();
+
     }
 
-        public HashMap<Integer, ArrayList<MonthReader>> getMonth()
+
+
+        public HashMap<Integer, ArrayList<MonthReader>> getMonths()
         {
            return months;
         }
@@ -31,6 +33,7 @@ public class MonthReports
     }
     public void saveReportsPerMonth() {
         for (int month = 1; month < 3; month++) {
+           ArrayList<MonthReader> monthReaders = new ArrayList<>();
             String paths = readFileContentsOrNull("resources/m.20210" + month + ".csv");
             if (paths == null) {
                 return;
@@ -51,12 +54,14 @@ public class MonthReports
     }
     public int getProfitItem( ArrayList<MonthReader> monthReader)
     {
+        int profit ;
         int sumOfProfit = 0;
             for (MonthReader monthReaders : monthReader  )
         {
             if (!monthReaders.getIsExpense())
             {
-                sumOfProfit = monthReaders.getQuantity() * monthReaders.getSumOfOne();
+                profit = monthReaders.getQuantity() * monthReaders.getSumOfOne();
+                sumOfProfit += profit;
             }
         }
         return sumOfProfit;
@@ -64,11 +69,13 @@ public class MonthReports
     public int getSpendingPerMonth(ArrayList<MonthReader> monthReader)
     {
         int sumOfSpending = 0;
+        int spending ;
         for (MonthReader monthReaders : monthReader  )
         {
             if (monthReaders.getIsExpense())
             {
-                sumOfSpending = monthReaders.getQuantity() * monthReaders.getSumOfOne();
+                spending = monthReaders.getQuantity() * monthReaders.getSumOfOne();
+                sumOfSpending+= spending;
             }
         }
         return sumOfSpending;

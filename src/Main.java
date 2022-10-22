@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.util.Scanner;
 public class Main
 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         YearReports yearReports = new YearReports();
         MonthReports monthReports = new MonthReports();
@@ -14,7 +15,7 @@ public class Main
             if (command == 1 )
             {
                 monthReports.saveReportsPerMonth();
-                if (monthReports.getMonth().isEmpty())
+                if (monthReports.getMonths().isEmpty())
                 {
 
                     System.out.println("Месячные отчёты не были считаны");
@@ -44,13 +45,21 @@ public class Main
             }
             else if (command == 3)
             {
-                if (monthReports.getMonth().isEmpty() || yearReports.getYear().isEmpty() )
+                if (monthReports.getMonths().isEmpty() || yearReports.getYear().isEmpty() )
                 {
                     System.out.println("Отчёты не были считаны, попробуйте снова!");
                 }
                 else
                 {
-                    System.out.println(dataReconciliation.getReconciliation());
+                    if (dataReconciliation.getReconciliation() == null)
+                    {
+                        System.out.println("При сверке отчётов ошибок не обноружено!");
+                    }
+                    else
+                    {
+                        System.out.println(dataReconciliation.getReconciliation());
+                    }
+
                 }
 
 
@@ -58,18 +67,16 @@ public class Main
             else if (command == 4)
             {
                 monthReports.infoByMonth();
-                if (monthReports.getMonth().isEmpty())
+                if (monthReports.getMonths().isEmpty())
                 {
                     System.out.println("Месячные отчёты не были считаны");
 
-
                 }
-                else {
-
-
+                else
+                {
                     System.out.println(monthReports.infoByMonth());
-
                 }
+
 
             }
             else if (command == 5)
@@ -80,10 +87,10 @@ public class Main
                 }
                 else
                 {
-                    for (int month = 1 ; month < yearReports.getYear().size(); month+=2)
+                    for (int month = 0  ; month < yearReports.getYear().size(); month+=2)
 
                     {
-                        System.out.println("Прибыль за " + yearReports.getYear().get(month).getMonth() + "-ый месяц = " + yearReports.profitForEachMonth(month));
+                        System.out.println("Прибыль за " + yearReports.getYear().get(month).getMonth() + "-ый месяц = " + yearReports.profitOrExpenseForEachMonth(month));
 
                     }
                     System.out.println("Средний расход за все месяцы в году: " + yearReports.averageExpensesOfYear());
@@ -97,6 +104,7 @@ public class Main
             else if (command == 0)
             {
                 System.out.println("Выход!");
+                break;
             }
             else
             {

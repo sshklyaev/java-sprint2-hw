@@ -36,23 +36,23 @@ public class YearReports {
 
     }
 
-    public Integer profitForEachMonth(int month)
+    public Integer profitOrExpenseForEachMonth(int month)
     {
-        int expense;
-        int profit;
+        int expenseByCurrentMonth;
+        int profitByCurrentMonth;
 
-        if (!(year.get(month).isExpense()))
+        if (year.get(month).isExpense())
         {
-            profit = year.get(month).getAmount();
-            expense = year.get(month + 1).getAmount();
+            expenseByCurrentMonth= year.get(month).getAmount();
+            profitByCurrentMonth = year.get(month + 1).getAmount();
         }
         else
         {
-            expense = year.get(month).getAmount();
-            profit = year.get(month + 1).getAmount();
+            profitByCurrentMonth = year.get(month).getAmount();
+            expenseByCurrentMonth = year.get(month + 1).getAmount();
 
         }
-        return profit - expense;
+        return profitByCurrentMonth - expenseByCurrentMonth ;
 
     }
     public int averageExpensesOfYear()
@@ -74,7 +74,7 @@ public class YearReports {
     public int averageProfitOfYear()
     {
         int averageProfit = 0;
-        int profitPerMonth = 0;
+        int profitPerMonth ;
         for (YearReader yearReader : year)
         {
             if (!(yearReader.isExpense()))
